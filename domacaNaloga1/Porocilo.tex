@@ -1,0 +1,372 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[slovene]{babel}
+\usepackage{amsfonts,amssymb,amsmath}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+
+
+
+
+\def\N{\mathbb{N}} % mnozica naravnih stevil
+\def\Z{\mathbb{Z}} % mnozica celih stevil
+\def\Q{\mathbb{Q}} % mnozica racionalnih stevil
+\def\R{\mathbb{R}} % mnozica realnih stevil
+\def\C{\mathbb{C}} % mnozica kompleksnih stevil
+\newcommand{\geslo}[2]{\noindent\textbf{#1} \quad \hangindent=1cm #2\\[-1pc]}
+
+\def\qed{$\hfill\Box$}   % konec dokaza
+\def\qedm{\qquad\Box}   % konec dokaza v matematičnem načinu
+\newtheorem{izrek}{Izrek}
+\newtheorem{trditev}{Trditev}
+\newtheorem{posledica}{Posledica}
+\newtheorem{lema}{Lema}
+\newtheorem{pripomba}{Pripomba}
+\newtheorem{definicija}{Definicija}
+\newtheorem{zgled}{Zgled}
+
+\newenvironment{dokaz}				
+{ \noindent
+	\textbf{Dokaz:}
+}
+	{\hfill $\square$
+}
+
+\title{Poročilo za 1. domačo nalogo  \\ 
+\Large Numerična Linearna Algebra}
+\author{Lenart Treven \\
+Fakulteta za matematiko in fiziko \\
+Oddelek za matematiko}
+\date{\today}
+
+\begin{document}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\maketitle
+\section{Uvod}
+V poročilu najprej pokažemo veljavnost dveh formul, ki jih potem uporabimo pri praktičnem delu, pri iskanju maksimalne ukrivljenosti $L$-krivulje. Nato pokažemo rezultate, ki smo jih dobili s praktičnim delom ter podamo okviren pregled, o organizaciji matlabovih datotek. Na koncu podamo komentar. 
+
+
+
+
+\section{Izpeljava $\eta(\alpha)$ in $\rho(\alpha)$}
+
+
+Na predavanjih smo pokazali, da je 
+\begin{align*}
+	\min_{x}||Ax -b||_{2}^2 + \alpha^2||x||_{2}^2
+\end{align*}
+dosežen pri
+\begin{align}\label{x}
+	x = \sum_{i=1}^{n}\frac{\sigma_i}{\sigma_i^2+\alpha^2}~u_i^Tb~v_i,
+\end{align}
+kjer je 
+\begin{align*}
+	A = \begin{bmatrix}
+	u_1 & \ldots & u_m 
+	\end{bmatrix} 
+	\begin{bmatrix}
+	\sigma_1 &  &  \\
+	& \ddots &  \\
+	&  &  
+	\end{bmatrix} 
+	\begin{bmatrix}
+	v_1^T \\
+	\vdots \\
+	v_n^T 
+	\end{bmatrix}
+\end{align*}
+singularni razcep matrike $A \in \R^{m\times n}.$ 
+Velja: 
+\begin{align*}
+	\eta(\alpha) &= ||x(\alpha)||_2^2 = x^Tx \\
+	&=  \sum_{i=1}^{n}\frac{\sigma_i}{\sigma_i^2+\alpha^2}~u_i^Tb~v_i^T \sum_{j=1}^{n}\frac{\sigma_j}{\sigma_j^2+\alpha^2}~u_j^Tb~v_j \\
+	&= \sum_{i=1}^{n}\sum_{j=1}^{n}\frac{\sigma_i}{\sigma_i^2+\alpha^2}~u_i^Tb\frac{\sigma_j}{\sigma_j^2+\alpha^2}~u_j^Tbv_i^Tv_j 
+\end{align*}
+Sedaj upoštevamo, da je 
+\begin{align*}
+	v_i^Tv_j =
+	\begin{cases}
+	1; ~i = j,\\
+	0;~ \text{sicer}.\\
+	\end{cases}
+\end{align*}
+Dobimo:
+\begin{align*}
+	\eta(\alpha) = \sum_{i=1}^{n}\frac{\sigma_i^2\beta_i^2}{\sigma_i^2+\alpha^2},
+\end{align*}
+kjer je $\beta_i = u_i^Tb.$
+
+Pokažimo še enakost za $\rho(\alpha).$  Po eni strani velja:
+\begin{align*}
+	\rho(\alpha) &= ||Ax-b||_2^2 = (Ax-b)^T(Ax-b)\\
+	&= x^TA^TAx - 2x^TA^Tb + b^Tb
+\end{align*}
+Velja tudi:
+\begin{align*}
+	||r_{\perp}||_2^2 + \sum_{i}\frac{\alpha^4\beta_i^2}{(\alpha^2+\sigma_i^2)^2} = b^Tb - \sum_{i}\beta_i^2 + \sum_{i}\frac{\alpha^4\beta_i^2}{(\alpha^2+\sigma_i^2)^2}.
+\end{align*}
+Želimo pokazati da velja: 
+\begin{align*}
+	x^TA^TAx - 2x^TA^Tb + b^Tb = b^Tb - \sum_{i}\beta_i^2 + \sum_{i}\frac{\alpha^4\beta_i^2}{(\alpha^2+\sigma_i^2)^2}.
+\end{align*}
+To velja natanko tedaj, ko velja: 
+\begin{align*}
+x^TA^TAx - 2x^TA^Tb  = - \sum_{i}\beta_i^2 + \sum_{i}\frac{\alpha^4\beta_i^2}{(\alpha^2+\sigma_i^2)^2}.
+\end{align*}
+Sedaj vstavimo $x$ iz \eqref{x} v zgornjo enačbo in dobimo:
+\begin{align*}
+\sum_{i}\frac{\sigma_i^4\beta_i^2}{(\sigma_i^2+\alpha^2)^2} - 2\sum_{i}\frac{\sigma_i^2}{\sigma_i^2+\alpha^2}\beta_i^2 = - \sum_{i}\beta_i^2 + \sum_{i}\frac{\alpha^4\beta_i^2}{(\alpha^2+\sigma_i^2)^2}.
+\end{align*}
+Enačbo pogledamo pri $i$-tem indeksu:
+\begin{align*}
+\frac{\sigma_i^4\beta_i^2}{(\sigma_i^2+\alpha^2)^2} - 2\frac{\sigma_i^2}{\sigma_i^2+\alpha^2}\beta_i^2 &= - \beta_i^2 + \frac{\alpha^4\beta_i^2}{(\alpha^2+\sigma_i^2)^2} ~ /.(\alpha^2+\sigma_i^2)^2\\
+\sigma_i^4\beta_i^2 - 2\sigma_i^2\beta_i^2(\sigma_i^2+\alpha^2) &= -\beta_i^2(\sigma_i^2+\alpha^2)^2 + \alpha^4\beta_i^2,
+\end{align*}
+kar pa vidimo da drži. S tem smo pokazali formuli za $\eta(\alpha)$ in $\rho(\alpha).$ Sedaj izračunajmo še odvode, ki smo jih uprabili pri funkciji \emph{kappa.m}.
+Velja:
+\begin{align*}
+	\eta(\alpha)' &= \sum_{i}\frac{-4\alpha\sigma_i^2\beta_i^2}{(\alpha^2+\sigma_i^2)^3} \\
+	\eta(\alpha)'' &= \sum_{i}\frac{-4\beta_i^2\sigma_i^2(\sigma_i^2-5\alpha^2)}{(\alpha^2 + \sigma_i^2)^4}\\
+	\rho(\alpha)' &= \sum_{i}\frac{4\alpha^3\beta_i^2\sigma_i^2}{(\alpha^2+\sigma_i^2)^3} \\
+	\rho(\alpha)'' &= \sum_{i} \frac{12\beta_i^2\sigma_i^2(\alpha^2\sigma_i^2-\alpha^4)}{(\alpha^2+\sigma_i^2)^4}.
+\end{align*}
+Za izračun ukrivljenosti uporabimo zvezi:
+\begin{align*}
+	\widehat{\rho}' = \frac{\rho'}{\rho}&, \widehat{\eta}' = \frac{\eta'}{\eta},\\
+	\widehat{\rho}' = \frac{\rho''-\rho'^2}{\rho^2}&, \widehat{\eta}' = \frac{\eta''-\eta'^2}{\eta^2}.
+\end{align*}
+
+\section{Obdelava podatkov}
+Funkcija, ki poišče najboljši $\alpha$ je v datoteki \emph{najboljsiAlpha.m}. Funkcija, ki izračuna približen $\alpha$ je v datoteki \emph{priblizniAlpha.m}. Algoritem za izračun mesta odreza je v datoteki \emph{izracunajMestoOdreza.m}. Idejo za algoritem dobimo na podlagi  slike \ref{fig:sig}.
+\begin{figure}[h]
+	\includegraphics[width=6cm]{odrezaniSingularni.jpg}
+	\centering
+	\caption{Singularne vrednosti in bete}
+	\label{fig:sig}
+\end{figure}
+Algoritem deluje tako, da izberemo mesto odseka tam, kjer postanejo $\beta_i$ približno velikosti $\frac{1}{4}\sigma_i$, kjer smo bete normalizirali. Ideja je, da takrat postane šum že dovolj velik v primerjavi z singularnimi vrednostmi in preveč moti člene v vsoti, zato od tam naprej postavimo faktorje filtra na 0. 
+
+Sedaj bomo prikazali prvotno sliko, 4 različno zmotene slike ter njihove popravke s tremi različnimi algoritmi. Podali bomo tudi rezultate ostrin, katerih delovanje bomo razložili v naslednjem poglavju.
+\begin{figure}[h]
+	\includegraphics[width=10cm]{prvotnaSlika.jpg}
+	\centering
+	\caption{Prvotna slika}
+	\label{fig:prvotnaSlika}
+\end{figure}
+V vseh naslednjih poglavjih bo tam, kjer so slike metulja, veljalo, da je v zgornjem levem kotu zmotena slika $\widehat{B}$, zgoraj desno slika $X1$, ki jo dobimo z regularizacijo Tihonovega, kjer $\alpha$ dobimo z iskanjem minimuma s pomočjo matlabove vgrajene knjižnjice. Spodaj levo je slika $X2$, ki jo dobimo z regularizacijo Tihonovega, kjer $\alpha$ dobimo s približnim izračunom, po algoritmu polinomskih zlepkov. Spodaj desno pa je slika $X3$, ki jo dobimo s pomočjo odrezanega singularnega razcepa, kjer mesto odreza izbermo z algoritmom, opisanim zgoraj. GRAT in LAPD prikazujeta dve različni oceni ostrin slik, ki smo ju uporabili, podrobnejša razlaga, je v naslednjem poglavju. Med sabo nista primerljivi. Velja omeniti, da pri obeh metodah manjša števlika pomeni manjšo prisotnost šuma. Za prvotno sliko velja: GRAT $=0.0597$ in LAPD $=0.1478$. V primerih je $s$ faktor zamegljevanja, ki ga potrebuje knjižnjica HNO, $e$ pa je faktor šuma, s katerim pomnožimo šum $rand(m,n)$.
+
+\newpage
+\subsection{Parametri $s = 2$, $e = 2$}
+Optimalni $\alpha = 0.230406149323062$.
+Približno izračunani $\alpha = 0.227031955843888.$ 
+\begin{table}[h!]
+	\centering
+	\caption{Ostrina slik}
+	\label{my-label}
+	\begin{tabular}{|l|l|l|l|l|}
+		\hline
+		& $\widehat{B}$ & $X1$   & $X2$   & $X3$   \\ \hline
+		GRAT & 0.9214        & 0.2512 & 0.2559 & 0.1737 \\ \hline
+		LAPD & 3.9822        & 0.6447 & 0.6586 & 0.3381 \\ \hline
+	\end{tabular}
+\end{table}
+
+
+\begin{figure}[h!]
+	\includegraphics[width=10cm]{s2e2Slike.jpg}
+	\centering
+	\caption{Parametri: $s = 2$, $e = 2$}
+	\label{fig:s2e2Slike}
+\end{figure}
+\begin{figure}[h!]
+	\begin{subfigure}{.5\textwidth}
+	\includegraphics[width=5cm]{s2e2LGrafi.jpg}
+	\centering
+	\caption{Parametri: $s = 2$, $e = 2$}
+	\label{fig:s2e2LGrafi}
+	\end{subfigure}
+	\begin{subfigure}{.5\textwidth}
+	\includegraphics[width=5cm]{s2e2MestoOdreza.jpg}
+	\centering
+	\caption{Parametri: $s = 2$, $e = 2$}
+	\label{fig:s2e5LMestoOdreza}
+	\end{subfigure}
+\end{figure}
+
+\newpage
+\subsection{Parametri $s=2, e=5$}
+
+Optimalni $\alpha = 0.267700394904301$.
+Približno izračunani $\alpha = 0.279591217686607.$ 
+
+
+\begin{table}[h!]
+	\centering
+\caption{Ostrina slik}
+	\begin{tabular}{|l|l|l|l|l|}
+		\hline
+		& $\widehat{B}$ & $X1$   & $X2$   & $X3$   \\ \hline
+		GRAT & 2.3002        & 0.5079 & 0.4798 & 0.9672 \\ \hline
+		LAPD & 9.9548        & 1.2828 & 1.2022 & 2.3325 \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{figure}[h!]
+	\includegraphics[width=10cm]{s2e5Slike.jpg}
+	\centering
+	\caption{Parametri: $s = 2$, $e = 5$}
+	\label{fig:s2e5Slike}
+\end{figure}
+\begin{figure}[h!]
+	\begin{subfigure}{.5\textwidth}
+		\includegraphics[width=5cm]{s2e5LGrafi.jpg}
+		\centering
+		\caption{Parametri: $s = 2$, $e = 5$}
+		\label{fig:s2e5LGrafi}
+	\end{subfigure}
+	\begin{subfigure}{.5\textwidth}
+		\includegraphics[width=5cm]{s2e5MestoOdreza.jpg}
+		\centering
+		\caption{Parametri: $s = 2$, $e = 5$}
+		\label{fig:s2e5MestoOdreza}
+	\end{subfigure}
+\end{figure}
+
+
+
+\newpage
+\subsection{Parametri $s=4, e=1$}
+
+Optimalni $\alpha = 0.162161879812697$.
+Približno izračunani $\alpha = 0.148268295601612.$ 
+
+\begin{table}[h!]
+	\centering
+\caption{Ostrina slik}
+	\begin{tabular}{|l|l|l|l|l|}
+		\hline
+		& $\widehat{B}$ & $X1$   & $X2$   & $X3$   \\ \hline
+		GRAT & 0.4614        & 0.0614 & 0.0671 & 0.0150 \\ \hline
+		LAPD & 1.9910        & 0.0798 & 0.0893 & 0.0021 \\ \hline
+	\end{tabular}
+\end{table}
+
+
+\begin{figure}[h!]
+	\includegraphics[width=10cm]{s4e1Slike.png}
+	\centering
+	\caption{Parametri: $s = 4$, $e = 1$}
+	\label{fig:s4e1Slike}
+\end{figure}
+\begin{figure}[h!]
+\begin{subfigure}{.5\textwidth}
+	\includegraphics[width=5cm]{s4e1LGrafi.png}
+	\centering
+	\caption{Parametri: $s = 4$, $e = 1$}
+	\label{fig:s4e1LGrafi}
+\end{subfigure}
+\begin{subfigure}{.5\textwidth}
+	\includegraphics[width=5cm]{s4e1MestoOdreza.png}
+	\centering
+	\caption{Parametri: $s = 4$, $e = 1$}
+	\label{fig:s4e1MestoOdreza}
+\end{subfigure}
+\end{figure}
+
+
+
+
+
+\newpage
+\subsection{Parametri $s=4$, $e=5$}
+Optimalni $\alpha =0.230958185004528$.
+Približno izračunani $\alpha = 0.230009259071327.$ 
+\begin{table}[h!]
+	\centering
+\caption{Ostrina slik}
+	\begin{tabular}{|l|l|l|l|l|}
+		\hline
+		& $\widehat{B}$ & $X1$   & $X2$   & $X3$   \\ \hline
+		GRAT & 2.2998        & 0.1774 & 0.1783 & 0.0416 \\ \hline
+		LAPD & 9.9547        & 0.2283 & 0.2296 & 0.0058 \\ \hline
+	\end{tabular}
+\end{table}
+
+
+\begin{figure}[h!]
+	\includegraphics[width=10cm]{s4e5Slike.png}
+	\centering
+	\caption{Parametri: $s = 4$, $e = 5$}
+	\label{fig:s4e5Slike}
+\end{figure}
+\begin{figure}[h!]
+\begin{subfigure}{.5\textwidth}
+	\includegraphics[width=5cm]{s4e5LGrafi.png}
+	\centering
+	\caption{Parametri: $s = 4$, $e = 5$}
+	\label{fig:s4e5LGrafi}
+\end{subfigure}
+\begin{subfigure}{.5\textwidth}
+	\includegraphics[width=5cm]{s4e5MestoOdreza.png}
+	\centering
+	\caption{Parametri: $s = 4$, $e = 5$}
+	\label{fig:s4e5MestoOdreza}	
+\end{subfigure}
+
+	
+\end{figure}
+\newpage
+
+
+
+\section{Ostrina}
+Za ostrino slike sem uporabil že napisano funkcijo, ki sem jo našel na \cite{vir1}. Uporabil sem dve metodi, GRAT temelji na gradientu slike, ki izračuna odvod slike. Ideja je, da ima ostra slika bolj ostre robove. Druga metoda, ki sem jo uporabil pa je LAPD, ki poleg prvih odvodov opazuje tudi druge odvode. Več se lahko prebere v \cite{vir2}. Ideja, da gledamo, samo drugo normo razlike med slikama, ni dobra, saj lahko zelo pokvarimo majhno število elementov v matriki, tako da se slika praktično ne spremeni, sprememba v drugi normi, pa je precej velika. Po drugi strani lahko elemente za malo spremenimo tako, da ima zmotena matrika podobno normo, vendar je slika popačena.  
+
+\begin{definicija}
+	\emph{Lokalni linearni operator} je definiran kot \emph{konvolucija} slike $I$ v $p = (x, y)$ s filtrom $W$:
+	$$ J(p) = I * W(p) = \frac{1}{S}\sum_{i=-k}^{k}\sum_{j=-k}^{k}w_{i,j}I(x+i, y+j),$$
+	kjer so $w_{i,j}$ uteži in $S > 0$ faktor skaliranja. 
+\end{definicija}
+Odvod slike dobimo tako, da se z ustreznim filtrom zapeljemo čez sliko, ter tako dobimo novo tabelo števil. 
+Primer matrike, s katero izvedemo filtriranje je npr. 
+$$ \begin{bmatrix}
+-1 & -2 & -1 \\
+0 & 0 & 0 \\
+1 & 2 & 1 
+\end{bmatrix}  $$
+S tako matriko potem množimo podmatrike začetne slike. Temu postopku pravimo filtriranje. Na podoben način  deluje algoritem LAPD. Algoritem GRAT pa deluje na osnovi razlik med posamezni piksli. 
+
+
+\section{Komentar}
+Opazimo, da regularizacija Tihonovega v večini primerov da na oko boljše rezultate. Edini primer, ko vrne primerljive rezultate je pri paramterih $s=2$  in $e=2$. Pri ostalih pa je regularizacija Tihonovega precej boljša, vsaj v primerjavi z mojim algoritmom. Tudi če iščemo faktor odreza na roke, se odrezani singularni razcep na tej sliki ne more primerjati z regularizacijo Tihonova. 
+
+Iskanje optimalnega $\alpha$ smo z metodo polinomskih zlepkov precej pohitrili, hkrati pa so slike praktično iste v primerjavi s tistimi, kjer vzamemo $\alpha$, ki ga izračuna matlabova vgrajena funkcija. 
+
+Za iskanje mesta odreza nam algoritem deluje dobro, če sliko malo popačimo. Z večanjem šuma pa postane algoritem občutno slabši. 
+
+
+
+\begin{thebibliography}{1}
+	\bibitem{vir1}
+	https://www.mathworks.com/matlabcentral/fileexchange/27314-focus-measure 
+	\bibitem{vir2}
+	https://sites.google.com/view/cvia/focus-measure
+\end{thebibliography}
+
+
+
+
+
+
+
+
+
+\end{document}
