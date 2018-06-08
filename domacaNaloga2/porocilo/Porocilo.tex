@@ -20,6 +20,7 @@
 \def\C{\mathbb{C}} % mnozica kompleksnih stevil
 \newcommand{\geslo}[2]{\noindent\textbf{#1} \quad \hangindent=1cm #2\\[-1pc]}
 \DeclareMathOperator{\ve}{vec}
+\DeclareMathOperator{\rand}{rand}
 
 \def\qed{$\hfill\Box$}   % konec dokaza
 \def\qedm{\qquad\Box}   % konec dokaza v matematičnem načinu
@@ -119,6 +120,33 @@ Od tu je jasno, da če želimo, da velja formula \eqref{determinanta}, mora velj
 	\end{cases}
 \end{align*}
 Na idejno enak način lahko $X$ posplošimo na poljubne velikosti tako, da ga lahko uporabimo za izračun determinante matrik višjih dimenzij., kar smo uporabili v datoteki \emph{determinantaEksperiment}.  
+
+
+\section{HOSVD}
+Pri tej nalogi smo najprej implementirali \emph{razpri.m}, ki nam tenzor razpre v $i$-ti izbrani smeri.  Druga nova datoteka pri tej nalogi pa je \emph{hosvd.m}, ki za vhodne parametre sprejeme trorazsežen tenzor $T$, ter željene dimenzije njegovega jedra. Funkcija nam vrne jedro, ter matrike $U_i$ z ortonormiranimi stolpci. Z mojo implementacijo metoda \emph{hosvd.m} porabi preveč spomina, zato sem namesto $\rand(5, 200, 200)$ vzel $\rand(5, 100, 100)$, da še vseeno dobim nek rezultat. Spodaj je prikazano jedro $G$, ki ga dobimo kot aproksimacijo v $\R^{3 \times 3 \times 3}$. 
+
+\begin{align*}
+G(:, :, 1) &= 
+\begin{pmatrix}
+-112.2054&0.00086499&-0.033207\\
+0.067136&-0.31259&-0.48249\\
+-0.13896&0.42642&-0.24045\\
+\end{pmatrix}\\
+G(:, :, 2) &= 
+\begin{pmatrix}
+-0.015684&-0.91549&0.59074\\
+-0.13908&0.52085&0.061513\\
+0.29164&-0.21774&-0.40183\\
+\end{pmatrix}\\
+G(:, :, 3) &= 
+\begin{pmatrix}
+0.021486&0.62483&1.6935\\
+0.47255&0.16888&-0.6975\\
+-0.31551&-0.55424&0.42156\\
+\end{pmatrix}
+\end{align*}
+
+
 
 \begin{thebibliography}{1}
 	\bibitem{vir1}
