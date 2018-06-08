@@ -10,6 +10,7 @@ fprintf('Priblizek za najvecjo singularno vrednost: %f\n', sigma(1));
 
 sigma1 = svd(Am);
 for i=1:length(sigma1)
+    fprintf('singularna vrednost %f\n',sigma(i))
     napakaNaNasihPodatkih = abs(sigma1(i)- sigma(i));
     fprintf('Napaka na nasih podatkih za singularno vrednost s%d: %.3e\n',i, napakaNaNasihPodatkih);
     teoreticnaNapaka = koraki * eps * abs(sigma(i));

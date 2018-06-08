@@ -1,4 +1,4 @@
-function [q,l]=deliinvladaj(A)
+function [q,l, d, u, bm]=deliinvladaj(A)
 
 % [X,D]=DELIINVLADAJ(A) izracuna lastne vrednosti in vektorje simetricne 
 % tridiagonalne matrike A preko metode deli in vladaj
