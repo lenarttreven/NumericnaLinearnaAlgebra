@@ -5,7 +5,7 @@ Us = cell(1, 3);
 n = [n1 n2 n3];
 for i=1:3
     S = razpri(X, i);
-    [U, Sigma, V] = svd(S);
+    [U, Sigma, V] = svds(S, n(i));
     Us{i} = U(:, 1:n(i));
 end
 G = zmnozi(zmnozi(zmnozi(X, Us{1}',1), Us{2}',2), Us{3}', 3);

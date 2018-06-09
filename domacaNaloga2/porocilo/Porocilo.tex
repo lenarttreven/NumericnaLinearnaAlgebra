@@ -55,7 +55,7 @@ Oddelek za matematiko}
 \maketitle
 
 \section{Enostranska Jacobijeva metoda}
-V 1. nalogi smo implementirali enostranski Jacobijevo metodo. V datoteki \emph{predznak.m} se nahaja funkcija, ki realnemu število priredi njegov predznak, s tem da številu $0$ priredi predznak $1$.  V datoteki \emph{zmnoziStolpce.m} se nahaja implementacija množenja z givensonovo rotacijo iz desne. V datoteki \emph{onesidejacrot.m} se nahaja funkcija, ki v matriki $G^TG$ uniči element na mestu $(j, k)$, če le ni že dovolj majhen. Mejo, kdaj še uničimo element določa parameter $eps$. V datoteki \emph{onesidejaccycle.m} je glavna funkcija, ki izvede ciklično enostransko Jacobijevo metodo. Metoda uničuje elemente, dokler v enem pregledu vseh elemenov, ne najde nobenega dovolj velikega, da bi ga uničila. Implementacija metod sloni na datotekah, ki jih ima prof. Bor Plestenjak objavljene na svoji spletni strani. Njegovi komentarji v kodi so večinoma ohranjeni.  V našem primeru se metoda ustavi, ko uničimo 185 elementov. Te elemente uničimo v $7$-ih ciklih. Približek za največjo singularno vrednost je $7.277868$.
+V 1. nalogi smo implementirali enostransko Jacobijevo metodo. V datoteki \emph{predznak.m} se nahaja funkcija, ki realnemu število priredi njegov predznak, s tem da številu $0$ priredi predznak $1$.  V datoteki \emph{zmnoziStolpce.m} se nahaja implementacija množenja z givensonovo rotacijo iz desne. V datoteki \emph{onesidejacrot.m} se nahaja funkcija, ki v matriki $G^TG$ uniči element na mestu $(j, k)$, če le ni že dovolj majhen. Mejo, kdaj še uničimo element določa parameter $eps$. V datoteki \emph{onesidejaccycle.m} je glavna funkcija, ki izvede ciklično enostransko Jacobijevo metodo. Metoda uničuje elemente, dokler v enem pregledu vseh elemenov, ne najde nobenega dovolj velikega, da bi ga uničila. Implementacija metod sloni na datotekah, ki jih ima prof. Bor Plestenjak objavljene na svoji spletni strani. Njegovi komentarji v kodi so večinoma ohranjeni.  V našem primeru se metoda ustavi, ko uničimo 185 elementov. Te elemente uničimo v $7$-ih ciklih. Približek za največjo singularno vrednost je $7.277868$.
 
 \begin{table}[h!!!]
 	\centering
@@ -79,7 +79,7 @@ V 1. nalogi smo implementirali enostranski Jacobijevo metodo. V datoteki \emph{p
 \newpage
 
 \section{Deli in vladaj}
-Koda je organizirana v 5 različnih datotek. Opisi kaj se dogaja v funkcijah \emph{psiFunkcija.m}, \emph{sekul,m} in \emph{sekular.m} so na začetku datotek. Datoteke so vezte iz predavateljeve spletne strani.  Funkcija \emph{deliinvladaj.m} temlji na datoteki iz predavateljeve spletne strani, vendar je popravljena tako, da naredi samo en korak metode \emph{deli in vladaj}, nato pa poišče lastne vektorje in vrednosti s pomočjo vgrajene metode. Nadaljuje kot je v navodilih. Funkcija vrne ortogonalno matriko $q$ lastnih vektorjev matrike $A$ , njej ortogonalno podobno matriko $l$, ter vektorja $d, u$ in skalar $rho$, ki tvorijo sekularno enačbo. 
+Koda je organizirana v 5 različnih datotek. Opisi kaj se dogaja v funkcijah \emph{psiFunkcija.m}, \emph{sekul,m} in \emph{sekular.m} so na začetku datotek. Datoteke so vzete iz predavateljeve spletne strani.  Funkcija \emph{deliinvladaj.m} temelji na datoteki iz predavateljeve spletne strani, vendar je popravljena tako, da naredi samo en korak metode \emph{deli in vladaj}, nato pa poišče lastne vektorje in vrednosti s pomočjo vgrajene metode. Nadaljuje, kot je v navodilih. Funkcija vrne ortogonalno matriko $q$ lastnih vektorjev matrike $A$ , njej ortogonalno podobno matriko $l$, ter vektorja $d, u$ in skalar $rho$, ki tvorijo sekularno enačbo. 
 
 \section{Vzmeti}
 Najprej zapišimo gibalne enačbe, ki veljajo za vozičke. 
@@ -99,7 +99,7 @@ To sestavimo v matrično enačbo in rešimo po zgledu iz profesorjevih prosojnic
 \end{figure}
  
 \section{Množenje v smereh}
-V datotekah \emph{zmnozi.m} in \emph{determinanta.m} se nahajata funkciji, kot sta podanai v navodilih naloge. V datoteki \emph{aliSmoEnaki.m} se nahaja funkcija, ki preveri, če vhodni vektor kakšno spremenljivko podvojeno. Funkcija \emph{predznakPermutacije.m} vrne predznak permutacije, ki ga potrebujemo za izračun determinante. V datoteki \emph{test.m} se nahaja algoritem, ki nadomešča $n$ for zank, ki smo ga dobili na \cite{vir1}. V spremenljivki $start\_ranges$ so shranjeni začetni indeksi for zank,  v spremenljivki $end\_ranges$ pa so shranjene končne vrednosti for zank. Vse te datoteke uporabimo v \emph{zmnoziEksperiment}, kjer implementiramo množenje tenzorja poljubnih dimenzij v neki smeri,ter v \emph{determinantaEksperiment}, kjer s pomočjo tenzorjev lahko izračunamo determinanto za kvadratno matriko poljubne velikosti. Težava računanja determinante na tak način se pojavi že pri matrikah nizkega ranga, saj postane tezor $X$ prevcej velik v prostorskem smislu. 
+V datotekah \emph{zmnozi.m} in \emph{determinanta.m} se nahajata funkciji, kot sta podani v navodilih naloge. V datoteki \emph{aliSmoEnaki.m} se nahaja funkcija, ki preveri, če ima vhodni vektor kakšno spremenljivko podvojeno. Funkcija \emph{predznakPermutacije.m} vrne predznak permutacije, ki ga potrebujemo za izračun determinante. V datoteki \emph{test.m} se nahaja algoritem, ki nadomešča $n$ for zank, ki smo ga dobili na \cite{vir1}. V spremenljivki $start\_ranges$ so shranjeni začetni indeksi for zank,  v spremenljivki $end\_ranges$ pa so shranjene končne vrednosti for zank. Vse te datoteke uporabimo v \emph{zmnoziEksperiment}, kjer implementiramo množenje tenzorja poljubnih dimenzij v neki smeri, ter v \emph{determinantaEksperiment}, kjer s pomočjo tenzorjev lahko izračunamo determinanto za kvadratno matriko poljubne velikosti. Težava računanja determinante na tak način se pojavi že pri matrikah nizkega ranga, saj postane tezor $X$ precej velik v prostorskem smislu. 
 
 Sedaj še razložimo, kako smo prišli do tenzorja $X$. 
 Iščemo tak $X\in \R^{3\times3\times3}$, da bo za matriko $A \in R^{3\times 3}$ veljalo:
@@ -123,26 +123,26 @@ Na idejno enak način lahko $X$ posplošimo na poljubne velikosti tako, da ga la
 
 
 \section{HOSVD}
-Pri tej nalogi smo najprej implementirali \emph{razpri.m}, ki nam tenzor razpre v $i$-ti izbrani smeri.  Druga nova datoteka pri tej nalogi pa je \emph{hosvd.m}, ki za vhodne parametre sprejeme trorazsežen tenzor $T$, ter željene dimenzije njegovega jedra. Funkcija nam vrne jedro, ter matrike $U_i$ z ortonormiranimi stolpci. Z mojo implementacijo metoda \emph{hosvd.m} porabi preveč spomina, zato sem namesto $\rand(5, 200, 200)$ vzel $\rand(5, 100, 100)$, da še vseeno dobim nek rezultat. Spodaj je prikazano jedro $G$, ki ga dobimo kot aproksimacijo v $\R^{3 \times 3 \times 3}$. 
+Pri tej nalogi smo najprej implementirali \emph{razpri.m}, ki nam tenzor razpre v $i$-ti izbrani smeri.  Druga nova datoteka pri tej nalogi pa je \emph{hosvd.m}, ki za vhodne parametre sprejeme trorazsežen tenzor $T$, ter željene dimenzije njegovega jedra. Funkcija nam vrne jedro, ter matrike $U_i$ z ortonormiranimi stolpci. Da implementacija ne porabi preveč spomina sem namesto matlabove funkcije \emph{svd} uporabil \emph{svds}. Spodaj je prikazano jedro $G$, ki ga dobimo kot aproksimacijo v $\R^{3 \times 3 \times 3}$. 
 
 \begin{align*}
 G(:, :, 1) &= 
 \begin{pmatrix}
--112.2054&0.00086499&-0.033207\\
-0.067136&-0.31259&-0.48249\\
--0.13896&0.42642&-0.24045\\
+-223.4892&-0.00034657&0.0086884\\
+-0.10114&0.68346&-0.1926\\
+0.022835&-0.48615&-0.27346\\
 \end{pmatrix}\\
 G(:, :, 2) &= 
 \begin{pmatrix}
--0.015684&-0.91549&0.59074\\
--0.13908&0.52085&0.061513\\
-0.29164&-0.21774&-0.40183\\
+-0.0040499&0.47046&1.2566\\
+-0.095096&0.60214&0.0045397\\
+0.76209&0.65776&-0.97128\\
 \end{pmatrix}\\
 G(:, :, 3) &= 
 \begin{pmatrix}
-0.021486&0.62483&1.6935\\
-0.47255&0.16888&-0.6975\\
--0.31551&-0.55424&0.42156\\
+0.01458&-1.1196&-0.76031\\
+-0.35662&-0.45619&1.0198\\
+-0.20352&0.24436&-0.34517\\
 \end{pmatrix}
 \end{align*}
 
